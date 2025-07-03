@@ -1,12 +1,31 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import About from '../components/About';
+import Stats from '../components/Stats';
+import Programs from '../components/Programs';
+import Teachers from '../components/Teachers';
+import Gallery from '../components/Gallery';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+import AIChat from '../components/AIChat';
+import AdmissionsForm from '../components/AdmissionsForm';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+      <Header />
+      <Hero />
+      <About />
+      <Stats />
+      <Programs />
+      <AdmissionsForm />
+      <Teachers />
+      <Gallery />
+      <Contact />
+      <Footer />
+      <AIChat />
     </div>
   );
 };
