@@ -5,8 +5,27 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const ADISChatBot = ({ onClose }) => {
-  const [messages, setMessages] = useState([
+// Type declarations for Speech Recognition API
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
+interface Message {
+  id: number;
+  text: string;
+  isBot: boolean;
+  timestamp: Date;
+}
+
+interface ADISChatBotProps {
+  onClose: () => void;
+}
+
+const ADISChatBot: React.FC<ADISChatBotProps> = ({ onClose }) => {
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       text: "Hello! I'm your AI Farm Assistant. I can help you with crop advice, irrigation schedules, pest management, and ADIS troubleshooting. What would you like to know?",
@@ -18,7 +37,7 @@ const ADISChatBot = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -27,7 +46,7 @@ const ADISChatBot = ({ onClose }) => {
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
-    const userMessage = {
+    const userMessage: Message = {
       id: messages.length + 1,
       text: inputMessage,
       isBot: false,
@@ -40,7 +59,7 @@ const ADISChatBot = ({ onClose }) => {
 
     // Simulate AI response
     setTimeout(() => {
-      const botResponse = {
+      const botResponse: Message = {
         id: messages.length + 2,
         text: generateAIResponse(inputMessage),
         isBot: true,
@@ -51,7 +70,7 @@ const ADISChatBot = ({ onClose }) => {
     }, 1500);
   };
 
-  const generateAIResponse = (question) => {
+  const generateAIResponse = (question: string): string => {
     const lowerQuestion = question.toLowerCase();
     
     if (lowerQuestion.includes('tomato') || lowerQuestion.includes('tomatoes')) {
@@ -72,39 +91,40 @@ const ADISChatBot = ({ onClose }) => {
   };
 
   const startVoiceRecognition = () => {
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognition = new SpeechRecognition();
-      
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onstart = () => {
-        setIsListening(true);
-      };
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setInputMessage(transcript);
-        setIsListening(false);
-      };
-
-      recognition.onerror = () => {
-        setIsListening(false);
-      };
-
-      recognition.onend = () => {
-        setIsListening(false);
-      };
-
-      recognition.start();
-    } else {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Speech recognition not supported in this browser.');
+      return;
     }
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInputMessage(transcript);
+      setIsListening(false);
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
   };
 
-  const speakText = (text) => {
+  const speakText = (text: string) => {
     if ('speechSynthesis' in window) {
       setIsSpeaking(true);
       const utterance = new SpeechSynthesisUtterance(text);
