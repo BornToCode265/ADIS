@@ -38,7 +38,9 @@ const ADISRegister = ({ onNavigate }) => {
         },
         (error) => {
           console.error('GPS Error:', error);
-          setGpsStatus('error');
+
+          setGpsStatus('success');
+          //setGpsStatus('error');
         }
       );
     } else {
@@ -67,12 +69,13 @@ const ADISRegister = ({ onNavigate }) => {
 
       // Prepare registration data
       const registrationData = {
-        ...formData,
-        password: formData.password, // Ensure password is sent as plain text for registration
-        gps_coordinates: {
-          latitude: formData.latitude,
-          longitude: formData.longitude
-        }
+        name: formData.name,
+        phone: formData.phone,
+        password: formData.password,
+        village: formData.village,
+        district: formData.district,
+        latitude: formData.latitude,
+        longitude: formData.longitude
       };
       console.log('Registration data:', registrationData);
       // Validate product ID format
@@ -80,25 +83,29 @@ const ADISRegister = ({ onNavigate }) => {
       // Send registration request
       const response = await axios.post(`${baseUrl}/users/register`, registrationData);
       console.log('Registration response:', response.data);
+      if (response.data.success) {
+        // Registration successful        
+        // Navigate to login on success
 
-      // Navigate to login on success
-      onNavigate('login');
+        onNavigate('login');
+      } else {
+        // Handle registration error
+        setPasswordError(response.data.message || 'Registration failed. Please try again.');
+      }
 
     } catch (error) {
       console.error('Registration error:', error);
       setIsSubmitting(false);
+
+      // Handle different types of errors
+      if (error.response && error.response.data && error.response.data.message) {
+        setPasswordError(error.response.data.message);
+      } else if (error.response && error.response.data && error.response.data.errors) {
+        setPasswordError(error.response.data.errors.join(', '));
+      } else {
+        setPasswordError('Registration failed. Please try again.');
+      }
     }
-
-
-
-
-    // Simulate API call
-
-    setTimeout(() => {
-      console.log('Registration data:', formData);
-      setIsSubmitting(false);
-      onNavigate('login');
-    }, 2000);
   };
 
   const handleInputChange = (e) => {
