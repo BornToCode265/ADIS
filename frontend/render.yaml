@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: adis-frontend
+    env: docker
+    region: singapore # Choose the region closest to your users
+    buildCommand: docker build -t adis-frontend .
+    startCommand: docker run -p 80:80 adis-frontend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        value: YOUR_BACKEND_URL # You'll need to update this
+    autoDeploy: true
