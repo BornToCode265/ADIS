@@ -2,9 +2,9 @@
 
 class Database {
     private $host = "localhost";
-    private $db_name = "adis_system";
-    private $username = "root";
-    private $password = "";
+    private $db_name = "u897516670_chaintechops_d";
+    private $username = "u897516670_chaintechops";
+    private $password = "T#9vLp2@Km6!Zw1r";
     public $conn;
 
     public function getConnection() {
