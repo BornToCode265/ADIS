@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "build:gh-pages": "NODE_ENV=production vite build",
+    "build:gh-pages": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build:gh-pages",
