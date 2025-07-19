@@ -24,7 +24,7 @@ const ADISSupport = ({ onNavigate }) => {
     },
     {
       title: 'Troubleshooting Guide',
-      type: 'PDF', 
+      type: 'PDF',
       description: 'Common issues and solutions',
       icon: <FileText size={24} className="text-orange-500" />
     },
@@ -54,8 +54,8 @@ const ADISSupport = ({ onNavigate }) => {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center py-4">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               onClick={() => onNavigate('landing')}
               className="mr-4"
             >
@@ -129,7 +129,7 @@ const ADISSupport = ({ onNavigate }) => {
           <p className="text-gray-600">
             Access these resources anytime, even without a product ID
           </p>
-          
+
           <div className="grid gap-6 md:grid-cols-2">
             {supportResources.map((resource, index) => (
               <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer">
@@ -141,8 +141,8 @@ const ADISSupport = ({ onNavigate }) => {
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-2">{resource.title}</h3>
                       <p className="text-gray-600 mb-3">{resource.description}</p>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="w-full"
                       >
@@ -161,7 +161,7 @@ const ADISSupport = ({ onNavigate }) => {
           <CardContent className="p-6">
             <h3 className="font-semibold text-blue-900 mb-2">Offline Access</h3>
             <p className="text-blue-800">
-              These resources are cached locally for offline access. You can view manuals and videos 
+              These resources are cached locally for offline access. You can view manuals and videos
               even without internet connection after your first visit.
             </p>
           </CardContent>

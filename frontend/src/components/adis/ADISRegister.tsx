@@ -22,7 +22,7 @@ const ADISRegister = ({ onNavigate }) => {
   const [gpsStatus, setGpsStatus] = useState('requesting');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordError, setPasswordError] = useState('');
-  const baseUrl = 'http://localhost/ADIS/backend/api';
+  const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     // Get GPS location
