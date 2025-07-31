@@ -1,7 +1,7 @@
 {
   "name": "adisfrontend",
   "version": "0.0.0",
-  "homepage": "https://BornToCode265.github.io/",
+  "homepage": "https://BornToCode265.github.io/ADIS/",
   "type": "module",
   "scripts": {
     "dev": "vite",
